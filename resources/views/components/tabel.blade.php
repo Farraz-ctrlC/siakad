@@ -2,11 +2,11 @@
 
 <div class="table-responsive">
     <table class="table table-striped table-hover align-middle mb-0">
-        <thead class="table-light">
+        <thead>
             <tr>
-                <th scope="col" style="width: 50px">#</th>
+                <th scope="col" class="bg-body-tertiary" style="width: 50px">#</th>
                 @foreach ($kolom as $judul)
-                    <th scope="col">{{ $judul }}</th>
+                    <th scope="col" class="bg-body-tertiary">{{ $judul }}</th>
                 @endforeach
             </tr>
         </thead>
@@ -29,7 +29,8 @@
                                     {{ $item[$kunci] }}
                                 </span>
                             @elseif ($kunci === 'nim')
-                                <a href="{{ route('mahasiswa.show', $item[$kunci]) }}">
+                                <a href="{{ route('mahasiswa.show', $item[$kunci]) }}"
+                                   class="text-decoration-none">
                                     {{ $item[$kunci] }}
                                 </a>
                             @else

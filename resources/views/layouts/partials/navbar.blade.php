@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-success sticky-top shadow-sm">
+<nav class="navbar navbar-dark bg-primary sticky-top shadow-sm">
     <div class="container-fluid">
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none me-2" type="button"
@@ -13,13 +13,13 @@
         </div>
 
         <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-success" type="button" id="themeToggle"
-                    aria-label="Ganti tema terang/gelap">
-                <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+            <button type="button" id="tombolTema" class="btn btn-primary"
+                    aria-label="Ganti tema terang atau gelap">
+                <i class="bi bi-moon-stars-fill" id="ikonTema"></i>
             </button>
 
             <div class="dropdown">
-                <button class="btn btn-success dropdown-toggle" type="button"
+                <button class="btn btn-primary dropdown-toggle" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i>
                     <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
@@ -45,3 +45,27 @@
         </div>
     </div>
 </nav>
+
+@push('scripts')
+<script>
+    (function () {
+        var html = document.documentElement;
+        var tombol = document.getElementById('tombolTema');
+        var ikon = document.getElementById('ikonTema');
+
+        function sesuaikanIkon() {
+            var gelap = html.getAttribute('data-bs-theme') === 'dark';
+            ikon.className = gelap ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+        }
+
+        tombol.addEventListener('click', function () {
+            var baru = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-bs-theme', baru);
+            try { localStorage.setItem('tema', baru); } catch (e) {}
+            sesuaikanIkon();
+        });
+
+        sesuaikanIkon();
+    })();
+</script>
+@endpush

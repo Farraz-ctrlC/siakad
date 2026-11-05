@@ -1,0 +1,1 @@
+$cost . ' = . round((microtime(true) - $mulai) * 1000) . ' ms' . PHP_EOL;

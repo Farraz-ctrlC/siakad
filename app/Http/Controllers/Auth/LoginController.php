@@ -33,7 +33,6 @@ class LoginController extends Controller
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $detik = RateLimiter::availableIn($key);
             $pesan = "Terlalu banyak percobaan login. Coba lagi dalam {$detik} detik.";
-
             return back()->with('error', $pesan)->onlyInput('email');
         }
 
@@ -41,8 +40,11 @@ class LoginController extends Controller
             RateLimiter::clear($key);
             $request->session()->regenerate();
 
-            $pesan = 'Login berhasil. Selamat datang, ' . Auth::user()->name . '.';
+            Auth::user()->update([
+                'last_login_at' => now(),
+            ]);
 
+            $pesan = 'Login berhasil. Selamat datang, ' . Auth::user()->name . '.';
             return redirect()->intended(route('dashboard'))->with('success', $pesan);
         }
 

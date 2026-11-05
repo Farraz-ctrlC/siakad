@@ -4,7 +4,7 @@
 
 @section('content')
     <x-page-header judul="Detail Mahasiswa"
-                   deskripsi="Informasi lengkap satu mahasiswa (data contoh).">
+                   deskripsi="Informasi lengkap satu mahasiswa.">
         <a href="{{ route('mahasiswa.index') }}" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Kembali
         </a>
@@ -27,9 +27,7 @@
                 <dd class="col-sm-9">{{ $mhs['email'] }}</dd>
 
                 <dt class="col-sm-3">Status</dt>
-                <dd class="col-sm-9">
-                    <span class="badge text-bg-secondary">{{ $mhs['status'] }}</span>
-                </dd>
+                <dd class="col-sm-9">{{ $mhs['status'] }}</dd>
             </dl>
         </div>
     </div>
