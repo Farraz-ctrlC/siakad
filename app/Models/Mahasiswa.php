@@ -21,6 +21,11 @@ class Mahasiswa extends Model
         'program_studi',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'nim';
+    }
+
     public function krs(): HasMany
     {
         return $this->hasMany(Krs::class, 'mahasiswa_id');

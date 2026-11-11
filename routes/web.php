@@ -23,25 +23,46 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    Route::get('/mahasiswa', [MahasiswaController::class, 'index'])
-        ->name('mahasiswa.index');
-    Route::get('/mahasiswa/{nim}', [MahasiswaController::class, 'show'])
-        ->name('mahasiswa.show');
-
+    // Endpoint JSON untuk Yajra DataTables (harus sebelum route {param})
     Route::get('/dosen/data', [DosenController::class, 'data'])->name('dosen.data');
-    
+    Route::get('/mahasiswa/data', [MahasiswaController::class, 'data'])->name('mahasiswa.data');
+    Route::get('/mata-kuliah/data', [MataKuliahController::class, 'data'])->name('matakuliah.data');
+    Route::get('/krs/data', [KrsController::class, 'data'])->name('krs.data');
+
+    // Hanya admin: tambah, ubah, hapus
     Route::middleware('role:admin')->group(function () {
         Route::resource('dosen', DosenController::class)
             ->except(['index', 'show']);
+
+        Route::resource('mahasiswa', MahasiswaController::class)
+            ->parameters(['mahasiswa' => 'mahasiswa'])
+            ->except(['index', 'show']);
+
+        Route::resource('mata-kuliah', MataKuliahController::class)
+            ->parameters(['mata-kuliah' => 'mataKuliah'])
+            ->names('matakuliah')
+            ->except(['index', 'show']);
+
+        Route::resource('krs', KrsController::class)
+            ->parameters(['krs' => 'krs'])
+            ->except(['index', 'show']);
     });
 
-    Route::resource('dosen', DosenController::class)
+    // Semua pengguna login: lihat data
+    Route::resource('dosen', DosenController::class)->only(['index', 'show']);
+
+    Route::resource('mahasiswa', MahasiswaController::class)
+        ->parameters(['mahasiswa' => 'mahasiswa'])
         ->only(['index', 'show']);
 
-    Route::get('/mata-kuliah', [MataKuliahController::class, 'index'])
-        ->name('matakuliah.index');
-    Route::get('/krs', [KrsController::class, 'index'])
-        ->name('krs.index');
+    Route::resource('mata-kuliah', MataKuliahController::class)
+        ->parameters(['mata-kuliah' => 'mataKuliah'])
+        ->names('matakuliah')
+        ->only(['index']);
+
+    Route::resource('krs', KrsController::class)
+        ->parameters(['krs' => 'krs'])
+        ->only(['index', 'show']);
 
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
 

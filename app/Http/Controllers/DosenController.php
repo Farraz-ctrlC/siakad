@@ -79,7 +79,6 @@ class DosenController extends Controller
         ]);
     }
 
-    /** Aturan validasi bersama untuk store dan update. */
     private function validated(Request $request, ?Dosen $dosen = null): array
     {
         return $request->validate(

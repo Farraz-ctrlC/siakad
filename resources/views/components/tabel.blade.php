@@ -18,15 +18,15 @@
                         <td>
                             @if ($kunci === 'status')
                                 @php
-                                    $warna = match ($item[$kunci]) {
-                                        'Aktif', 'Disetujui' => 'success',
-                                        'Menunggu', 'Cuti' => 'warning',
-                                        'Ditolak' => 'danger',
+                                    $warna = match (strtolower($item[$kunci])) {
+                                        'aktif', 'disetujui' => 'success',
+                                        'menunggu', 'cuti', 'diajukan' => 'warning',
+                                        'ditolak' => 'danger',
                                         default => 'secondary',
                                     };
                                 @endphp
                                 <span class="badge text-bg-{{ $warna }}">
-                                    {{ $item[$kunci] }}
+                                    {{ ucfirst($item[$kunci]) }}
                                 </span>
                             @elseif ($kunci === 'nim')
                                 <a href="{{ route('mahasiswa.show', $item[$kunci]) }}"

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Krs extends Model
 {
+    public const MAKS_SKS = 24;
+
     protected $table = 'krs';
 
     protected $fillable = [
@@ -34,4 +36,9 @@ class Krs extends Model
             MataKuliah::class, 'krs_detail', 'krs_id', 'mata_kuliah_id'
         )->withTimestamps();
     }
-}   
+
+    public function hitungSks(): int
+    {
+        return (int) $this->mataKuliah->sum('sks');
+    }
+}
